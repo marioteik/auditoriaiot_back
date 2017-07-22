@@ -1,17 +1,27 @@
-var info = {
-    name: string,
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var auditoria = new Schema({
+    name: { type: String, required: true },
     period: {
-        start: Date,
+        start: { type: Date, default: Date.now },
         end: Date
     },
-    chat: {
-        timestamp: Date,
-        user: string,
-        text: string
-    },
+    chat: [
+        {
+            user: String,
+            timestamp: { type: Date, default: Date.now },
+            text: String
+        }
+    ],
     approval: {
-        user: string,
+        user: String,
         timestamp: Date,
-        status: string
+        status: {
+            type: String,
+            enum: ['Aguardando', 'Reprovado', 'Aprovado'],
+        }
     }
-}
+});
+
+module.exports = db.model('Auditorias', auditoria);

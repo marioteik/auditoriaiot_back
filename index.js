@@ -14,10 +14,9 @@ var mOptions = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS:
 var mongodbUri = 'mongodb://iot_chat:iot_chat@ds151820.mlab.com:51820/iot_chat';
 
 mongoose.connect(mongodbUri, mOptions);
+
 var conn = mongoose.connection;
-
 conn.on('error', console.error.bind(console, 'connection error:'));
-
 conn.once('open', function() {
     console.log('Conectado ao MongoDB');
 });
