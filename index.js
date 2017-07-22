@@ -15,4 +15,4 @@ app.use(express.static(__dirname + '/public'));
 
 const io = socketIO(server);
 
-io.on('connection', auditoria);
+io.of('/chat').on('connection', auditoria);

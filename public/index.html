@@ -6,13 +6,6 @@
 </head>
 <body>
 <p id='server-time'></p>
-<script>
-    var socket = io();
-    var el = document.getElementById('server-time');
-    socket.on('time', function(timeString) {
-        el.innerHTML = 'Server time: ' + timeString;
-    });
-</script>
 
 <ul class="pages">
     <li class="chat page">

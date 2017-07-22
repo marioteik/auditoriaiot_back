@@ -23,14 +23,15 @@ $(function() {
     var lastTypingTime;
     var $currentInput = $usernameInput.focus();
 
-    var socket = io();
+    var socketIo = io();
+    var socket = socketIo.of('/chat');
 
     function addParticipantsMessage (data) {
         var message = '';
         if (data.numUsers === 1) {
-            message += "there's 1 participant";
+            message += "há 1 participante";
         } else {
-            message += "there are " + data.numUsers + " participants";
+            message += "há " + data.numUsers + " participantes";
         }
         log(message);
     }
@@ -102,7 +103,7 @@ $(function() {
     // Adds the visual chat typing message
     function addChatTyping (data) {
         data.typing = true;
-        data.message = 'is typing';
+        data.message = 'está digitando';
         addChatMessage(data);
     }
 
@@ -229,7 +230,7 @@ $(function() {
     socket.on('login', function (data) {
         connected = true;
         // Display the welcome message
-        var message = "Welcome to Socket.IO Chat – ";
+        var message = "Bem vindo a auditoria – ";
         log(message, {
             prepend: true
         });
@@ -265,18 +266,17 @@ $(function() {
     });
 
     socket.on('disconnect', function () {
-        log('you have been disconnected');
+        log('você se desconectou');
     });
 
     socket.on('reconnect', function () {
-        log('you have been reconnected');
+        log('você se reconectou');
         if (username) {
             socket.emit('add user', username);
         }
     });
 
     socket.on('reconnect_error', function () {
-        log('attempt to reconnect has failed');
+        log('tentativa de conectar falhou');
     });
-
 });
