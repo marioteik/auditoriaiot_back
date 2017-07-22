@@ -21,6 +21,10 @@ conn.once('open', function() {
     console.log('Conectado ao MongoDB');
 });
 
+// INICIA AS ROTAS
+var auditoriaRoutes = require('./routes/auditoria');
+app.use('/auditoria', auditoriaRoutes);
+
 server.listen(port, function () {
     console.log('Server listening at port %d', port);
 });
