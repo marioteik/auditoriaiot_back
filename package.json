@@ -9,7 +9,7 @@
     "scripts": {
         "start": "nodemon ./index.js localhost 3000",
         "logs": "heroku logs",
-        "deploy": "git commit -am changes && git push heroku master"
+        "deploy": "git add . && git commit -am changes && git push heroku master"
     },
     "dependencies": {
         "bufferutil": "3.0.2",
