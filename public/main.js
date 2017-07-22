@@ -23,7 +23,7 @@ $(function() {
     var lastTypingTime;
     var $currentInput = $usernameInput.focus();
 
-    var socket = io.connect("/hello");
+    var socket = io.connect("/chat");
 
     function addParticipantsMessage (data) {
         var message = '';
@@ -243,13 +243,13 @@ $(function() {
 
     // Whenever the server emits 'user joined', log it in the chat body
     socket.on('user joined', function (data) {
-        log(data.username + ' joined');
+        log(data.username + ' entrou');
         addParticipantsMessage(data);
     });
 
     // Whenever the server emits 'user left', log it in the chat body
     socket.on('user left', function (data) {
-        log(data.username + ' left');
+        log(data.username + ' saiu');
         addParticipantsMessage(data);
         removeChatTyping(data);
     });
@@ -277,5 +277,9 @@ $(function() {
 
     socket.on('reconnect_error', function () {
         log('tentativa de conectar falhou');
+    });
+
+    socket.on('time', function(timeString) {
+        console.log(timeString);
     });
 });

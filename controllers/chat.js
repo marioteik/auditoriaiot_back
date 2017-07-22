@@ -44,11 +44,6 @@ module.exports = function (socket) {
         });
     });
 
-    var el = document.getElementById('server-time');
-    socket.on('time', function(timeString) {
-        el.innerHTML = 'Horário do servidor: ' + timeString;
-    });
-
     // when the user disconnects.. perform this
     socket.on('disconnect', function () {
         if (addedUser) {
