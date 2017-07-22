@@ -1,9 +1,14 @@
 const express = require('express');
+var app = express();
 var server = require('http').createServer(app);
 const socketIO = require('socket.io');
 const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const port  = process.env.PORT || 3000;
+
+server.listen(port, function () {
+    console.log('Server listening at port %d', port);
+});
 
 app.use(express.static(__dirname + '/public'));
 
