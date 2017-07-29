@@ -1,4 +1,5 @@
 var numUsers = 0;
+var users = [];
 
 module.exports = function (socket) {
     var addedUser = false;
@@ -7,7 +8,7 @@ module.exports = function (socket) {
     socket.on('new message', function (data) {
         // we tell the client to execute 'new message'
         socket.broadcast.emit('new message', {
-            username: socket.username,
+            user: socket.username,
             message: data
         });
     });
@@ -17,15 +18,14 @@ module.exports = function (socket) {
         if (addedUser) return;
 
         // we store the username in the socket session for this client
-        socket.username = username;
+        socket.user = username;
+        users.push(username);
         ++numUsers;
         addedUser = true;
-        socket.emit('login', {
-            numUsers: numUsers
-        });
-        // echo globally (all clients) that a person has connected
-        socket.broadcast.emit('user joined', {
-            username: socket.username,
+
+        socket.emit('user joined', {
+            user: socket.user,
+            users: users,
             numUsers: numUsers
         });
     });
@@ -35,9 +35,13 @@ module.exports = function (socket) {
         if (addedUser) {
             --numUsers;
 
+            var index = users.indexOf(socket.user);
+            if (index !== -1)
+                users.splice(index, 1);
+
             // echo globally that this client has left
             socket.broadcast.emit('user left', {
-                username: socket.username,
+                user: socket.user,
                 numUsers: numUsers
             });
         }
