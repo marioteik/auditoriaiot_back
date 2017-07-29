@@ -85,14 +85,14 @@ $(function() {
         }
 
         var $usernameDiv = $('<span class="username"/>')
-            .text(data.username)
-            .css('color', getUsernameColor(data.username));
+            .text(data.user)
+            .css('color', getUsernameColor(data.user));
         var $messageBodyDiv = $('<span class="messageBody">')
-            .text(data.message);
+            .text(data.text);
 
         var typingClass = data.typing ? 'typing' : '';
         var $messageDiv = $('<li class="message"/>')
-            .data('username', data.username)
+            .data('username', data.user)
             .addClass(typingClass)
             .append($usernameDiv, $messageBodyDiv);
 
@@ -102,7 +102,7 @@ $(function() {
     // Adds the visual chat typing message
     function addChatTyping (data) {
         data.typing = true;
-        data.message = 'está digitando';
+        data.text = 'está digitando';
         addChatMessage(data);
     }
 
@@ -172,7 +172,7 @@ $(function() {
     // Gets the 'X is typing' messages of a user
     function getTypingMessages (data) {
         return $('.typing.message').filter(function (i) {
-            return $(this).data('username') === data.username;
+            return $(this).data('username') === data.user;
         });
     }
 
@@ -243,13 +243,13 @@ $(function() {
 
     // Whenever the server emits 'user joined', log it in the chat body
     socket.on('user joined', function (data) {
-        log(data.username + ' entrou');
+        log(data.user + ' entrou');
         addParticipantsMessage(data);
     });
 
     // Whenever the server emits 'user left', log it in the chat body
     socket.on('user left', function (data) {
-        log(data.username + ' saiu');
+        log(data.user + ' saiu');
         addParticipantsMessage(data);
         removeChatTyping(data);
     });
