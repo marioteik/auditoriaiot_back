@@ -10,7 +10,7 @@ module.exports = function (socket) {
         socket.emit('new message', {
             _id: '123123',
             timestamp: Date.now(),
-            user: socket.username,
+            user: socket.user,
             message: data
         });
     });
