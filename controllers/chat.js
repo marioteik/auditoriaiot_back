@@ -11,7 +11,7 @@ module.exports = function (socket) {
             _id: '123123',
             timestamp: Date.now(),
             user: socket.user,
-            message: data
+            text: data
         });
     });
 
