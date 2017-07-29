@@ -11,7 +11,7 @@ var routes = function (Auditorias) {
     auditoriaRouter.route('/isActive')
         .get(auditoriaCtrl.isActive);
     auditoriaRouter.route('/stop')
-        .get(auditoriaCtrl.stop);
+        .get(auditoriaCtrl.stop); 
 
     /*auditoriaRouter.use('/:auditoriaId', auditoriaCtrl.returnOne);
 
