@@ -17,7 +17,7 @@ var AuditoriaController = function(Auditorias) {
         });
     };
 
-    var getOne = function (req, res) { 
+    var getOne = function (req, res) {
         var returnAuditoria = req.auditoria.toJSON();
         returnAuditoria.links = {};
         res.json(returnAuditoria);

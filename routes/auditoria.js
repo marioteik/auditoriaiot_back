@@ -13,12 +13,12 @@ var routes = function (Auditorias) {
     auditoriaRouter.route('/stop')
         .get(auditoriaCtrl.stop);
 
-    auditoriaRouter.use('/:auditoriaId', auditoriaCtrl.returnOne);
+    /*auditoriaRouter.use('/:auditoriaId', auditoriaCtrl.returnOne);
 
     auditoriaRouter.route('/:auditoriaId')
         .get(auditoriaCtrl.getOne)
         .patch(auditoriaCtrl.patch)
-        .delete(auditoriaCtrl.delete);
+        .delete(auditoriaCtrl.delete);*/
 
     return auditoriaRouter;
 };
