@@ -6,22 +6,32 @@ const path = require('path');
 var chat = require('./controllers/chat');
 var mongoose = require('mongoose');
 
-const port  = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
+const local = false;
 
-var mOptions = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-    replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
+var mOptions = {
+    server: {socketOptions: {keepAlive: 300000, connectTimeoutMS: 30000}},
+    replset: {socketOptions: {keepAlive: 300000, connectTimeoutMS: 30000}}
+};
 
-var mongodbUri = 'mongodb://iot_chat:iot_chat@ds151820.mlab.com:51820/iot_chat';
-
-mongoose.connect(mongodbUri, mOptions);
+if (local)
+    db = mongoose.connect('mongodb://localhost/bookAPI', mOptions);
+else
+    db = mongoose.connect('mongodb://auditoriaiot:Auditoria69*@mongodb.uhserver.com:27017/auditoriaiot', mOptions);
 
 var conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
-conn.once('open', function() {
+conn.once('open', function () {
     console.log('Conectado ao MongoDB');
 });
 
 // INICIA AS ROTAS
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 var auditoriaRoutes = require('./routes/auditoria');
 app.use('/auditoria', auditoriaRoutes);
 
