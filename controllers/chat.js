@@ -64,5 +64,10 @@ module.exports = function (socket) {
         }
     });
 
+    socket.on('end stream', function () {
+        socket.broadcast.emit('go auditoria');
+        socket.emit('go auditoria');
+    });
+
     setInterval(() => socket.emit('users', { users: users, numUsers: numUsers }), 1000);
 };
