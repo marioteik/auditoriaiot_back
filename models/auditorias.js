@@ -20,6 +20,7 @@ var auditoria = new Schema({
         status: {
             type: String,
             enum: ['Aguardando', 'Reprovado', 'Aprovado'],
+            default: 'Aguardando'
         }
     }
 });

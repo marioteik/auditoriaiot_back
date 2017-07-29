@@ -1,15 +1,26 @@
 var express = require('express');
-var router = express.Router();
-var auditoriaController = require('../controllers/auditoria')();
 
-// inicia auditoria
-router.get('/start', function (req, res) {
-    auditoriaController.start(req, res);
-});
+var routes = function (Auditorias) {
+    var auditoriaRouter = express.Router();
+    var auditoriaCtrl = require('../controllers/auditoria')(Auditorias);
 
-// para auditoria
-router.get('/stop', function (req, res) {
-    auditoriaController.stop(req, res);
-});
+    auditoriaRouter.route('/')
+        .get(auditoriaCtrl.getAll);
+    auditoriaRouter.route('/start')
+        .post(auditoriaCtrl.start);
+    auditoriaRouter.route('/isActive')
+        .get(auditoriaCtrl.isActive);
+    auditoriaRouter.route('/stop')
+        .get(auditoriaCtrl.stop);
 
-module.exports = router;
+    auditoriaRouter.use('/:auditoriaId', auditoriaCtrl.returnOne);
+
+    auditoriaRouter.route('/:auditoriaId')
+        .get(auditoriaCtrl.getOne)
+        .patch(auditoriaCtrl.patch)
+        .delete(auditoriaCtrl.delete);
+
+    return auditoriaRouter;
+};
+
+module.exports = routes;

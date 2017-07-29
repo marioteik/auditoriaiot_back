@@ -5,9 +5,13 @@ const socketIO = require('socket.io');
 const path = require('path');
 var chat = require('./controllers/chat');
 var mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const port = process.env.PORT || 3000;
-const local = false;
+const local = process.env.AMBIENT == 'local';
+
+app.use(bodyParser.json());
 
 var mOptions = {
     server: {socketOptions: {keepAlive: 300000, connectTimeoutMS: 30000}},
@@ -15,7 +19,7 @@ var mOptions = {
 };
 
 if (local)
-    db = mongoose.connect('mongodb://localhost/bookAPI', mOptions);
+    db = mongoose.connect('mongodb://localhost/auditoriaiot', mOptions);
 else
     db = mongoose.connect('mongodb://auditoriaiot:Auditoria69*@mongodb.uhserver.com:27017/auditoriaiot', mOptions);
 
@@ -25,6 +29,8 @@ conn.once('open', function () {
     console.log('Conectado ao MongoDB');
 });
 
+var Auditorias = require('./models/auditorias');
+
 // INICIA AS ROTAS
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -32,7 +38,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-var auditoriaRoutes = require('./routes/auditoria');
+var auditoriaRoutes = require('./routes/auditoria')(Auditorias);
 app.use('/auditoria', auditoriaRoutes);
 
 server.listen(port, function () {
