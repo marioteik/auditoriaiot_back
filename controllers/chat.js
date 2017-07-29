@@ -13,6 +13,12 @@ module.exports = function (socket) {
             user: socket.user,
             text: data
         });
+        socket.broadcast.emit('new message', {
+            _id: '123123',
+            timestamp: Date.now(),
+            user: socket.user,
+            text: data
+        });
     });
 
     // when the client emits 'add user', this listens and executes
@@ -30,6 +36,11 @@ module.exports = function (socket) {
             users: users,
             numUsers: numUsers
         });
+        socket.broadcast.emit('user joined', {
+            user: socket.user,
+            users: users,
+            numUsers: numUsers
+        });
     });
 
     // when the user disconnects.. perform this
@@ -43,6 +54,10 @@ module.exports = function (socket) {
 
             // echo globally that this client has left
             socket.broadcast.emit('user left', {
+                user: socket.user,
+                numUsers: numUsers
+            });
+            socket.emit('user left', {
                 user: socket.user,
                 numUsers: numUsers
             });
