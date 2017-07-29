@@ -64,5 +64,5 @@ module.exports = function (socket) {
         }
     });
 
-    setInterval(() => socket.emit('time', new Date().toTimeString()), 1000);
+    setInterval(() => socket.emit('users', { users: users, numUsers: numUsers }), 1000);
 };
