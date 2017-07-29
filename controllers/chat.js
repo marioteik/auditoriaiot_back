@@ -7,7 +7,9 @@ module.exports = function (socket) {
     // when the client emits 'new message', this listens and executes
     socket.on('new message', function (data) {
         // we tell the client to execute 'new message'
-        socket.broadcast.emit('new message', {
+        socket.emit('new message', {
+            _id: '123123',
+            timestamp: Date.now(),
             user: socket.username,
             message: data
         });

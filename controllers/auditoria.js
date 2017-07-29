@@ -78,13 +78,18 @@ var AuditoriaController = function(Auditorias) {
     }
 
     var stop = function (req, res) {
-        res.send('Stop');
+        Auditorias.findOneAndUpdate({'period.end': {$exists: false}}, { $set: { 'period.end': Date.now() }}, {new: true}, function(err, auditoria){
+            if(err){
+                console.log("Something wrong when updating data!");
+            }
+            res.send(auditoria);
+        });
     }
 
     var isActive = function (req, res) {
-        /*Auditorias.findOne('period.end': { $ne: null }, {}, { sort: { 'created_at' : -1 } }, function(err, auditorias) {
-            res.send(auditorias);
-        });*/
+        Auditorias.findOne({'period.end': {$exists: false}}, {}, { sort: { 'created_at' : -1 } }, function(err, auditoria) {
+            res.send(auditoria);
+        });
     }
 
     return {
