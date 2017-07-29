@@ -82,7 +82,9 @@ var AuditoriaController = function(Auditorias) {
     }
 
     var isActive = function (req, res) {
-        res.send('false');
+        Auditorias.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, auditorias) {
+            res.send(auditorias);
+        });
     }
 
     return {
