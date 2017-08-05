@@ -19,7 +19,7 @@ var mOptions = {
 };
 
 if (local)
-    db = mongoose.connect('mongodb://localhost/auditoriaiot', mOptions);
+    db = mongoose.connect('mongodb://localhost/auditoriaiot2', mOptions);
 else
     db = mongoose.connect('mongodb://auditoriaiot:Auditoria69*@mongodb.uhserver.com:27017/auditoriaiot', mOptions);
 
